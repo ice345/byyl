@@ -1,0 +1,27 @@
+# Mini-C语言词法规则定义
+# 格式: name=regex 或 _name数字=regex (生成DFA的规则)
+
+# 基本字符类定义
+letter=[A-Za-z]
+digit=[0-9]
+
+# Token规则
+# 标识符: 以字母或下划线开头
+_ID101=(_|letter)(_|letter|digit)*
+
+# 整数
+_NUM102=digit+
+
+# 浮点数 (简化版)
+_FLOAT103=digit+\.digit+
+
+# 关键字 (9个): else, if, int, float, real, return, void, while, for
+# 关键字在词法分析器中硬编码处理
+
+# 运算符:
+# 单字符: + - * / % ^ . < > = 
+# 双字符: <= >= == != ++ --
+
+# 分隔符: ; , ( ) [ ] { }
+
+# 注释: // 到行尾 (词法分析器中处理)

@@ -1,0 +1,356 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Widget</class>
+ <widget class="QWidget" name="Widget">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1000</width>
+    <height>750</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>正则表达式转词法分析器</string>
+  </property>
+  <property name="styleSheet">
+   <string notr="true">QWidget {
+    background-color: #f5f5f5;
+    font-family: "Microsoft YaHei", "SimHei", sans-serif;
+}
+
+QPushButton {
+    background-color: #4a90d9;
+    color: white;
+    border: none;
+    border-radius: 6px;
+    padding: 8px 16px;
+    font-size: 14px;
+    min-width: 80px;
+}
+
+QPushButton:hover {
+    background-color: #357abd;
+}
+
+QPushButton:pressed {
+    background-color: #2a5f8f;
+}
+
+QPushButton#pushButton {
+    background-color: #28a745;
+}
+
+QPushButton#pushButton:hover {
+    background-color: #218838;
+}
+
+QPlainTextEdit {
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    padding: 8px;
+    font-family: "Consolas", "Monaco", monospace;
+    font-size: 12px;
+}
+
+QTableWidget {
+    background-color: white;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    gridline-color: #e0e0e0;
+}
+
+QTableWidget::item {
+    padding: 4px;
+}
+
+QTableWidget QHeaderView::section {
+    background-color: #4a90d9;
+    color: white;
+    padding: 6px;
+    border: none;
+    font-weight: bold;
+}
+
+QLabel {
+    color: #333;
+}
+
+QCheckBox {
+    color: #333;
+}
+
+QCheckBox::indicator {
+    width: 16px;
+    height: 16px;
+}
+
+QGroupBox {
+    font-weight: bold;
+    border: 2px solid #4a90d9;
+    border-radius: 6px;
+    margin-top: 12px;
+    padding-top: 10px;
+}
+
+QGroupBox::title {
+    subcontrol-origin: margin;
+    left: 10px;
+    padding: 0 5px;
+    color: #4a90d9;
+}</string>
+  </property>
+  <layout class="QVBoxLayout" name="verticalLayout">
+   <property name="spacing">
+    <number>10</number>
+   </property>
+   <property name="leftMargin">
+    <number>15</number>
+   </property>
+   <property name="topMargin">
+    <number>15</number>
+   </property>
+   <property name="rightMargin">
+    <number>15</number>
+   </property>
+   <property name="bottomMargin">
+    <number>15</number>
+   </property>
+   <item>
+    <widget class="QLabel" name="label">
+     <property name="font">
+      <font>
+       <pointsize>20</pointsize>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">color: #2c3e50; padding: 10px;</string>
+     </property>
+     <property name="text">
+      <string>正则表达式转词法分析器</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="groupBox">
+     <property name="title">
+      <string>输入区域</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_2">
+      <item>
+       <widget class="QLabel" name="label_4">
+        <property name="text">
+         <string>请输入正则表达式（或点击"打开文件"加载）：</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <layout class="QHBoxLayout" name="horizontalLayout_input">
+        <item>
+         <widget class="QPlainTextEdit" name="plainTextEdit_2">
+          <property name="minimumSize">
+           <size>
+            <width>0</width>
+            <height>120</height>
+           </size>
+          </property>
+          <property name="placeholderText">
+           <string>在此输入正则表达式...</string>
+          </property>
+         </widget>
+        </item>
+        <item>
+         <layout class="QVBoxLayout" name="verticalLayout_buttons">
+          <item>
+           <widget class="QCheckBox" name="checkBox">
+            <property name="text">
+             <string>忽略大小写</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QComboBox" name="comboBox_lang">
+            <property name="styleSheet">
+             <string notr="true">padding: 4px;</string>
+            </property>
+            <item>
+             <property name="text">
+              <string>TINY语言</string>
+             </property>
+            </item>
+            <item>
+             <property name="text">
+              <string>Mini-C语言</string>
+             </property>
+            </item>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushButton_6">
+            <property name="text">
+             <string>打开文件</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <widget class="QPushButton" name="pushButton_7">
+            <property name="text">
+             <string>保存文件</string>
+            </property>
+           </widget>
+          </item>
+          <item>
+           <spacer name="verticalSpacer">
+            <property name="orientation">
+             <enum>Qt::Vertical</enum>
+            </property>
+            <property name="sizeHint" stdset="0">
+             <size>
+              <width>20</width>
+              <height>40</height>
+             </size>
+            </property>
+           </spacer>
+          </item>
+         </layout>
+        </item>
+       </layout>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="groupBox_2">
+     <property name="title">
+      <string>功能操作</string>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <item>
+       <widget class="QPushButton" name="pushButton">
+        <property name="font">
+         <font>
+          <pointsize>12</pointsize>
+          <bold>true</bold>
+         </font>
+        </property>
+        <property name="text">
+         <string>开始分析</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pushButton_4">
+        <property name="text">
+         <string>查看NFA</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pushButton_3">
+        <property name="text">
+         <string>查看DFA</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pushButton_5">
+        <property name="text">
+         <string>最小化DFA</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pushButton_2">
+        <property name="styleSheet">
+         <string notr="true">background-color: #17a2b8;</string>
+        </property>
+        <property name="text">
+         <string>生成代码</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pushButton_10">
+        <property name="styleSheet">
+         <string notr="true">background-color: #e67e22;</string>
+        </property>
+        <property name="text">
+         <string>编译</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pushButton_11">
+        <property name="styleSheet">
+         <string notr="true">background-color: #6f42c1;</string>
+        </property>
+        <property name="text">
+         <string>测试</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pushButton_8">
+        <property name="text">
+         <string>查看LEX文件</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item>
+    <widget class="QLabel" name="label_3">
+     <property name="styleSheet">
+      <string notr="true">color: #666; font-style: italic; padding: 5px;</string>
+     </property>
+     <property name="text">
+      <string>提示：请先输入正则表达式并点击"开始分析"，然后可查看NFA/DFA状态转换表或生成词法分析器。</string>
+     </property>
+    </widget>
+   </item>
+   <item>
+    <widget class="QGroupBox" name="groupBox_3">
+     <property name="title">
+      <string>结果显示</string>
+     </property>
+     <layout class="QVBoxLayout" name="verticalLayout_3">
+      <item>
+       <widget class="QTableWidget" name="tableWidget">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>300</height>
+         </size>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPlainTextEdit" name="plainTextEdit">
+        <property name="minimumSize">
+         <size>
+          <width>0</width>
+          <height>300</height>
+         </size>
+        </property>
+        <property name="readOnly">
+         <bool>true</bool>
+        </property>
+        <property name="placeholderText">
+         <string>此处将显示生成的词法分析程序代码或运行结果...</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>

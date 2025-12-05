@@ -1,0 +1,49 @@
+BTreeNode
+{
+    kind: -1
+    value: stmt-sequence
+    nodeList:
+    BTreeNode
+    {
+        kind: read
+        value: read
+        nodeList:
+        BTreeNode
+        {
+            kind: ID
+            value: x
+        }
+    }
+    BTreeNode
+    {
+        kind: ASSIGN
+        value: :=
+        nodeList:
+        BTreeNode
+        {
+            kind: ID
+            value: x
+        }
+        BTreeNode
+        {
+            kind: -1
+            value: simple-exp
+            nodeList:
+            BTreeNode
+            {
+                kind: PLUS
+                value: +
+            }
+            BTreeNode
+            {
+                kind: ID
+                value: x
+            }
+            BTreeNode
+            {
+                kind: NUMBER
+                value: 1
+            }
+        }
+    }
+}

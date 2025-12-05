@@ -1,0 +1,22 @@
+# TINY语言词法规则定义
+# 格式: name=regex 或 _name数字=regex (生成DFA的规则)
+
+# 基本字符类定义
+letter=[A-Za-z]
+digit=[0-9]
+
+# Token规则 (以_开头表示需要生成DFA)
+_ID101=letter(letter|digit)*
+_NUM102=digit+
+
+# 关键字 (8个)
+# if, then, else, end, repeat, until, read, write
+
+# 运算符
+# +, -, *, /, %, ^, <, >, =, <=, >=, <>, :=
+
+# 分隔符
+# ;, (, )
+
+# 注释 (跳过)
+# { ... }

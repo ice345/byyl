@@ -1,0 +1,87 @@
+对Mini-C的语义的简单解释:
+
+1.program→ definition-list
+2.definition-list→definition-list definition |definition
+3.definition→variable-definition | function-definition
+程序由定义的列表(或序列)组成,定义可以是函数或变量定义,顺序是任意的。至少必须
+有一个定义。接下来是语义限制(这些在 C 中不会出现)。所有的变量和函数在使用前必须定
+义(这避免了向后 backpatching 引用)。程序中最后的定义必须是一个函数定义,名字为
+main。注意,Mini C 缺乏原型,因此定义和声明之间没有区别(像 C 一样)。
+4.variable-definition→type-indicator ID ；|type-indicator ID[NUM]；
+5.type-indicator→int|float|double|void
+变量定义或者定义了简单的整数或浮点数类型变量,或者是基类型为整数或浮点数的数
+组变量,索引范围从 0 到 NUM-1。注意,在 Mini C 中仅有的基本类型是整型、浮点数(分单精
+度和双精度)和空类型。在一个变量定义中,只能使用类型指示符 int、float 或 double。
+void 用于函数定义(参见下面)。也要注意,每个定义只能定义一个变量。
+6.function-definition→ type-indicator ID( parameters )compound-stmt
+7.parameters→parameter-list | void
+8.parameter-list→parameter-list, parameter | parameter
+9.parameter→type-indicator ID | type-indicator ID [ ]
+函数定义由返回类型指示符、标识符以及在圆括号内的用逗号分开的参数列表组成,后
+面跟着一个复合语句,是函数的代码。如果函数的返回类型是 void,那么函数不返回任何值
+(即是一个过程)。函数的参数可以是 void(即没有参数),或者一列描述函数的参数。参数后
+面跟着方括号是数组参数,其大小是可变的。简单的整型或浮点数参数由值传递。数组参数
+由引用来传递(也就是指针),在调用时必须通过数组变量来匹配。注意,类型“函数”没有参
+数。一个函数参数的作用域等于函数定义的复合语句,函数的每次请求都有一个独立的参数
+集。函数可以是递归的(对于使用定义允许的范围)
+10.compound-stmt →{local-definitions statement-list }
+复合语句由用花括号围起来的一组定义和语句组成。复合语句通过用给定的顺序执行语
+句序列来执行。局部定义/声明的作用域等于复合语句的语句列表,并代替任何全局定义/声
+明。
+11.local-definitions→local-definitions variable-definition | empty
+12.statement-list→statement-list statement | empty
+注意定义和语句列表都可以是空的(非终结符 empty 表示空字符串,有时写作。)
+13.statement→ expression-stmt
+|compound-stmt
+|condition-stmt
+|dowhile-stmt
+|return-stmt
+14.expression-stmt→expression；|；
+表达式语句有一个可选的且后面跟着分号的表达式。这样的表达式通常求出它们一方的
+结果。因此,这个语句用于赋值和函数调用。
+15.condition-stmt→if(expression) statement
+|if(expression)statement else statement
+if 语句有通常的语义:表达式进行计算;非 0 值引起第一条语句的执行;0 值引起第二条
+语句的执行,如果它存在的话。这个规则导致了典型的悬挂 else 二义性,可以用一种标准的
+方法解决:else 部分通常作为当前 if 的一个子结构立即分析(“最近嵌套”非二义性规
+则)。
+16.dowhile-stmt→do statement while (expression)
+Do while 语句是 Mini C 中唯一的重复语句。它重复执行语句,直到表达式的求值为 0。
+17.return-stmt→ return ；| return expression ；
+返回语句可以返回一个值也可无值返回。函数没有说明为 void 就必须返回一个值。函
+数定义为 void 就没有返回值。 return 引起控制返回调用者(如果它在 main 中,则程序结
+束)。
+18.expression→variable = expression | simple-expression
+19.variable→ID |ID[expression]
+表达式是一个变量引用,后面跟着赋值符号(等号)和一个表达式,或者就是一个简单的表
+达式。赋值有通常的存储语义:找到由 variable 表示的变量的地址,然后由赋值符右边的子
+表达式进行求值,子表达式的值存储到给定的地址。这个值也作为整个表达式的值返回。
+variable 是整型变量、浮点数变量或下标数组变量。负的下标将引起程序停止(与 C 不
+同)。然而,不对其进行下标越界检査。
+variable 表示 Mini C 比 C 有进一步的限制。在 C 中赋值的目标必须是左值（l-
+value),左值是可以由许多操作获得的地址。在 Mini C 中唯一的左值是由 variable 语法给
+定的,因此这个种类按照句法进行检查,代替像 C 中那样的类型检查。故在 Mini C 中指针运
+算是禁止的。
+20.simple-expression→additive-expression relop additive-expression
+|additive-expression
+21.relop→<=|<|>|>=|==|!=
+简单表达式由无结合的关系操作符组成(即无括号的表达式仅有一个关系操作符)。简单
+表达式在它不包含关系操作符时,其值是加法表达式的值,或者如果关系算式求值为 true,其
+值为 1,求值为 false 时值为 0。
+22.additive-expression→ additive-expression addop term | term
+23.adop→+|-
+24.term→term mulop factor | factor
+25.mulop→*|/|%
+加法表达式和项表示了算术操作符的结合性和优先级。符号/对于整数则表示整数除，
+即任何余数都被截去，对于浮点数则表示除法；符号%表示整数求除，浮点数不支持%运算。
+26.factor→ (expression)| variable | call | NUM
+因子是围在括号内的表达式;或一个变量,求出其变量的值;或者一个函数调用,求出函数
+的返回值;或者一个 NUM,其值由扫描器计算。数组变量必须是下标变量,除非表达式由单个
+ID 组成,并且以数组为参数在函数调用中使用(如下所示)。
+27.call→ ID( arguments)
+28.arguments→ argument-list | empty
+29.argument-list→ argument-list，expression | expression
+函数调用的组成是一个 ID(函数名),后面是用括号围起来的参数。参数或者为空,或者
+由逗号分割的表达式列表组成,表示在一次调用期间分配的参数的值。函数在调用之前必须
+定义,定义中参数的数目必须等于调用中参数的数目。函数定义中的数组参数必须和一个表
+达式匹配,这个表达式由一个标识符组成表示一个数组变量。

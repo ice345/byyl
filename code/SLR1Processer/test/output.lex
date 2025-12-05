@@ -1,0 +1,9 @@
+read: read
+ID: x
+SEMI: ;
+ID: x
+ASSIGN: :=
+ID: x
+PLUS: +
+NUMBER: 1
+EOF: $
